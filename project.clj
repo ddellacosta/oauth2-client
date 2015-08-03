@@ -1,4 +1,4 @@
-(defproject oauth2-client "0.1.0"
+(defproject ddellacosta/oauth2-client "0.1.0"
   :description "OAuth2/OpenID Connect Client Library for Clojure."
 
   :url "https://github.com/ddellacosta/oauth2-client"
