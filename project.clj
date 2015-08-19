@@ -13,12 +13,23 @@
    [prismatic/schema "0.4.3"]
    [ring "1.4.0"]
    [ring/ring-codec "1.0.0"]
-   [org.clojure/clojure "1.7.0"]
-   [compojure "1.4.0"]]
-
-  :plugins [[codox "0.8.10"]]
+   [org.clojure/clojure "1.7.0"]]
 
   :profiles
   {:dev
-   {:dependencies [[ring/ring-mock "0.2.0"]
-                   [org.clojure/tools.nrepl "0.2.10"]]}})
+   {:source-paths ["examples"]
+
+    :plugins [[codox "0.8.13"]
+              [lein-environ "1.0.0"]]
+
+    :codox
+    {:exclude [oauth2-client.examples-utils
+               oauth2-client.github
+               oauth2-client.google
+               oauth2-client.intralinks]}
+
+    :dependencies
+    [[compojure "1.4.0"]
+     [environ "1.0.0"]
+     [org.clojure/tools.nrepl "0.2.10"]
+     [ring/ring-mock "0.2.0"]]}})

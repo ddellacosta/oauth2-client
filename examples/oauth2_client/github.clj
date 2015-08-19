@@ -1,8 +1,13 @@
-(ns oauth2-examples-ring
+;; Github OAuth2:
+;; https://developer.github.com/v3/oauth/
+
+(ns oauth2-client.github
   (:require
-   [cheshire.core :refer [parse-string]]
    [compojure.core :refer [GET defroutes]]
+   [oauth2-client.core :as oauth2]
+   [oauth2-client.examples-utils :refer [pprint-response-body]]
    [oauth2-client.ring :as oauth2-ring]
+   [environ.core :refer [env]]
    [ring.adapter.jetty :as ring-jetty]
    [ring.middleware.params :refer [wrap-params]]
    [ring.middleware.session :refer [wrap-session]]
@@ -11,14 +16,10 @@
 (def oauth2-config
   {:authorization-uri "https://github.com/login/oauth/authorize"
    :access-token-uri "https://github.com/login/oauth/access_token"
-   :client-id ""
-   :client-secret ""
+   :client-id (:github-client-id env)
+   :client-secret (:github-client-secret env)
    :redirect-uri "http://127.0.0.1:3000/github-callback"
    :scope nil})
-
-(defn print-github-user-info
-  [response]
-  (-> response :body (parse-string true) pr-str))
 
 (defroutes oauth2
   (GET "/" []
@@ -28,8 +29,8 @@
        (oauth2-ring/do-authorized
         oauth2-config
         request
-        #(-> (oauth2-ring/authorized-get-request % "https://api.github.com/user")
-             print-github-user-info)))
+        #(-> (oauth2/authorized-request :get % "https://api.github.com/user" (oauth2/auth-headers "token" %))
+             pprint-response-body)))
 
   (GET "/github-callback" request
        (oauth2-ring/oauth2-callback-handler oauth2-config request))
