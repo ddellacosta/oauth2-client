@@ -22,6 +22,12 @@
     :plugins [[codox "0.8.13"]
               [lein-environ "1.0.0"]]
 
+    :codox
+    {:exclude [oauth2-client.examples-utils
+               oauth2-client.github
+               oauth2-client.google
+               oauth2-client.intralinks]}
+
     :dependencies
     [[compojure "1.4.0"]
      [environ "1.0.0"]
