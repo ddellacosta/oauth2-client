@@ -15,18 +15,19 @@
    [ring/ring-codec "1.0.0"]
    [org.clojure/clojure "1.7.0"]]
 
+  :plugins [[codox "0.8.13"]]
+
+  :codox
+  {:exclude [oauth2-client.examples-utils
+             oauth2-client.github
+             oauth2-client.google
+             oauth2-client.intralinks]}
+
   :profiles
   {:dev
    {:source-paths ["examples"]
 
-    :plugins [[codox "0.8.13"]
-              [lein-environ "1.0.0"]]
-
-    :codox
-    {:exclude [oauth2-client.examples-utils
-               oauth2-client.github
-               oauth2-client.google
-               oauth2-client.intralinks]}
+    :plugins [[lein-environ "1.0.0"]]
 
     :dependencies
     [[compojure "1.4.0"]
