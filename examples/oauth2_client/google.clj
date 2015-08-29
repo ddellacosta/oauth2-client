@@ -27,10 +27,10 @@
 
   (GET "/google-user-info" request 
        (oauth2-ring/do-authorized
-        oauth2-config
-        request
-        #(-> (oauth2/authorized-request :get % (str "https://www.googleapis.com/oauth2/v2/userinfo"))
-             pprint-response-body)))
+        oauth2-config request
+        #(oauth2/authorized-request
+          :get % (str "https://www.googleapis.com/oauth2/v2/userinfo"))
+        pprint-response-body))
 
   (GET "/google-callback" request
        (oauth2-ring/oauth2-callback-handler oauth2-config request))

@@ -1,4 +1,4 @@
-(defproject ddellacosta/oauth2-client "0.1.0"
+(defproject ddellacosta/oauth2-client "0.2.0-SNAPSHOT"
   :description "OAuth2/OpenID Connect Client Library for Clojure."
 
   :url "https://github.com/ddellacosta/oauth2-client"
@@ -20,8 +20,7 @@
   :codox
   {:exclude [oauth2-client.examples-utils
              oauth2-client.github
-             oauth2-client.google
-             oauth2-client.intralinks]}
+             oauth2-client.google]}
 
   :profiles
   {:dev
@@ -33,4 +32,5 @@
     [[compojure "1.4.0"]
      [environ "1.0.0"]
      [org.clojure/tools.nrepl "0.2.10"]
+     [ring/ring-codec "1.0.0"]
      [ring/ring-mock "0.2.0"]]}})

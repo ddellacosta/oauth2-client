@@ -9,6 +9,7 @@
    [oauth2-client.ring :as oauth2-ring]
    [environ.core :refer [env]]
    [ring.adapter.jetty :as ring-jetty]
+   [ring.util.codec :refer [base64-encode]]
    [ring.middleware.params :refer [wrap-params]]
    [ring.middleware.session :refer [wrap-session]]
    [ring.util.response :as response]))
@@ -27,10 +28,21 @@
 
   (GET "/github-user-info" request 
        (oauth2-ring/do-authorized
-        oauth2-config
-        request
-        #(-> (oauth2/authorized-request :get % "https://api.github.com/user" (oauth2/auth-headers "token" %))
-             pprint-response-body)))
+        oauth2-config request
+        #(oauth2/authorized-request
+          :get % "https://api.github.com/user" (oauth2/auth-headers "token" %))
+        pprint-response-body))
+
+  (GET "/revoke-all" request
+       (oauth2-ring/do-authorized
+        oauth2-config request
+        #(let [encoded (-> (str (:client-id oauth2-config) ":" (:client-secret oauth2-config))
+                           (.getBytes "UTF-8")
+                           base64-encode)]
+           (oauth2/authorized-request
+            :delete % (str "https://api.github.com/applications/" (:client-id oauth2-config) "/tokens")
+            (assoc (oauth2/auth-headers "Basic" encoded) :debug-body true :debug true)))
+        (fn [_] "Authorizations...REVOKED!")))
 
   (GET "/github-callback" request
        (oauth2-ring/oauth2-callback-handler oauth2-config request))

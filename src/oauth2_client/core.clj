@@ -92,6 +92,9 @@
 
   You can also toggle debugging of the clj-http.client/post call by
   passing in :debug-http-client? true in the oauth2-config map."
+  ;;
+  ;; TODO make it easier to add clj-http args to the http/post call.
+  ;;
   ([oauth2-config]
    (access-token-post-request oauth2-config :json))
   ([{:keys [debug-http-client? token-request-query-args-fn]
@@ -102,6 +105,7 @@
         (hash-map :accept accept-type
                   :debug debug-http-client?
                   :debug-body debug-http-client?
+                  :throw-entire-message? true
                   :form-params)
         (http/post (:access-token-uri oauth2-config)))))
 
@@ -142,7 +146,7 @@
                             (assoc :debug true :debug-body true))]
     (authorized-request :get \"https://api.github.com/users\" clj-http-config))
 
-  The authorization headers will override the default, and any other
+  Passed-in authorization headers will override the default, and any other
   arguments will get added to the clj-http get or post function's
   final second argument.
   "
@@ -151,5 +155,7 @@
   ([method access_token url clj-http-config]
    (let [clj-http-config' (merge (auth-headers "Bearer" access_token) clj-http-config)]
      (case method
-       :get  (http/get url clj-http-config')
-       :post (http/post url clj-http-config')))))
+       :get    (http/get url clj-http-config')
+       :post   (http/post url clj-http-config')
+       :put    (http/put url clj-http-config')
+       :delete (http/delete url clj-http-config')))))
