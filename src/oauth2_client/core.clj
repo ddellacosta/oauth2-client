@@ -18,13 +18,16 @@
        ((juxt :authorization-uri :access-token-uri :client-id :client-secret))
        (every? (complement string/blank?))))
 
+(defn remove-nils-from-map
+  [m]
+  (->> m (remove #(-> % val nil?)) (into {})))
+
 (defn add-params-to-url
   "Generates an url with a query string from a url string
    and hash-map for the query parameters."
   [url query-params]
   (->> query-params
-       (remove #(-> % val nil?))
-       (into {})
+       remove-nils-from-map
        ring-codec/form-encode
        (str url "?")))
 
