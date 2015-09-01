@@ -162,3 +162,36 @@
        :post   (http/post url clj-http-config')
        :put    (http/put url clj-http-config')
        :delete (http/delete url clj-http-config')))))
+
+;; Refresh
+
+(defn refresh-token-args
+  "Constructs a set of "
+  [refresh-token {:keys [refresh-scope scope client-id client-secret]}]
+  ;; Required
+  {:grant_type "refresh_token"
+   :refresh_token refresh-token
+
+   ;; Optional
+   :scope (or refresh-scope scope)
+
+   ;; This bit is confusing:
+   ;; 
+   ;; If the client type is confidential or the client was issued
+   ;; client credentials (or assigned other authentication
+   ;; requirements), the client MUST authenticate with the
+   ;; authorization server as described in Section 3.2.1.
+   ;;
+   ;; That means we need client-id/client-secret? -- or at least it
+   ;; seems to based on what some providers (i.e. Intralinks) require
+   ;; in their token refresh process.
+   :client_id client-id
+   :client_secret client-secret})
+
+(defn refresh-access-token-request
+  [{:keys [refresh-token-uri]} refresh-token-args]
+  (http/post
+   refresh-token-uri
+   {:debug true
+    :debug-body true
+    :form-params refresh-token-args}))
