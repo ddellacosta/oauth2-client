@@ -21,13 +21,13 @@ Checkout the Github and Google examples in `/examples`.
 
 There is certainly overlap between this library and many others out there.  Here's a list below so you can compare and contrast, with some notes added where appropriate.
 
-* [clj-oauth2](1) - OAuth2 client
-* [oauthentic](2) - OAuth2 client
-* [oauth-clj](3) - supports OAuth v1 and v2 apparently - seems more up-to-date than some of the other libs
-* [clj-oauth](4) - supports OAuth v1
-* [friend-oauth2](5) - for integration with Friend, should technically be considered a OpenID connect implementation, no longer actively maintained
-* [clauth](6) - go-to for implementing a provider, don't believe it works as a client
-* [qarth](7) - more comprehensive library for doing Friend-based OAuth2 as well as sans-Friend OAuth2 requests. Offers a bunch of pre-defined helpers for the most popular services like Google, FB, etc.
+* [clj-oauth2](https://github.com/DerGuteMoritz/clj-oauth2) - OAuth2 client
+* [oauthentic](https://github.com/pelle/oauthentic) - OAuth2 client
+* [oauth-clj](https://github.com/r0man/oauth-clj) - supports OAuth v1 and v2 apparently - seems more up-to-date than some of the other libs
+* [clj-oauth](https://github.com/mattrepl/clj-oauth) - supports OAuth v1
+* [friend-oauth2](https://github.com/ddellacosta/friend-oauth2) - for integration with Friend, should technically be considered a OpenID connect implementation, no longer actively maintained
+* [clauth](https://github.com/pelle/clauth) - go-to for implementing a provider, don't believe it works as a client
+* [qarth](https://github.com/mthvedt/qarth) - more comprehensive library for doing Friend-based OAuth2 as well as sans-Friend OAuth2 requests. Offers a bunch of pre-defined helpers for the most popular services like Google, FB, etc.
 
 ## Contributing/Testing/Etc.
 
