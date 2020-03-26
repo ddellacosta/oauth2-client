@@ -1,3 +1,5 @@
+# This project is unsupported. Fork at will.
+
 # oauth2-client
 
 Current version on [clojars](https://clojars.org/oauth2-client):
